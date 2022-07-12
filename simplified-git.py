@@ -552,7 +552,7 @@ komutlar = {
 def switch(case):
     return komutlar.get(case, default)()
 while True:
-    title = lambda: os.system("title Git Easy To Use by Burak Yabgu V2")
+    title = lambda: os.system("title Simplified Git To Use by Burak Yabgu V2")
     title()
     komut = input("~#")
     print(switch(komut))
