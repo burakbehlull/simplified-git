@@ -1,6 +1,6 @@
 # Simplified Git
 ## Coder by Burak Yabgu
 
-Yardım için:
+Kodları görmek için:
 ```help``` ve ya ```yardım```
 yazmanız  yeterli.
