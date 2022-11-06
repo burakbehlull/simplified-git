@@ -180,7 +180,7 @@ def indir():
     if endsing == True:
         print("Lütfen linkin sonundaki / siliniz.")
     else:
-        _indir_ = lambda: os.system(f"{df_disk} & cd {df} & git clone {link}.git")
+        _indir_ = lambda: os.system(f"{disk} & cd {wp} & git clone {link}.git")
         _indir_()
     return "\t ***"
 def y():
@@ -552,7 +552,7 @@ komutlar = {
 def switch(case):
     return komutlar.get(case, default)()
 while True:
-    title = lambda: os.system("title Simplified Git To Use by Burak Yabgu V2")
+    title = lambda: os.system("title Git Easy To Use by Burak Yabgu V2")
     title()
     komut = input("~#")
     print(switch(komut))
