@@ -12,6 +12,7 @@ for yol in veriyi_al.iter('yol'):
 
 help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "Giriş | login", "Giriş Kontrol | lc",
+            "Giriş Bilgileri Değiştirme | gcra",
             "Dosya Yükleme | y",
             ".gitignore | gi",
             "git init | init",
@@ -100,6 +101,16 @@ def copy():
     
     copy_ = lambda: os.system(f"{disk} & cd {wp} & copy {eskiad} {yeniad}")
     copy_()
+    return "\t ***"
+
+def gcra():
+    print("Lütfen değiştireceğiz, username ve emailinizi giriniz.")
+    username = input("username: ")
+    email = input("email: ")
+    login_username = lambda: os.system(f"git config --global --replace-all user.name  \"{username}\"")
+    login_email = lambda: os.system(f"git config --global --replace-all user.email \"{email}\"")
+    login_username()
+    login_email()
     return "\t ***"
 
 def cd():
@@ -483,6 +494,7 @@ komutlar = {
     "help2": yardim2,
     "login control": git_login_control,
     "lc": git_login_control,
+    "gcra": gcra,
     "i": git_init,
     "init": git_init,
     "login": git_login,
