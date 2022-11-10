@@ -6,15 +6,20 @@ veriyi_al = dosyayi_cek.getroot()
 for workplace in veriyi_al.iter('workplace'):
     wp = workplace.text
     disk = wp[0:2]
-for yol in veriyi_al.iter('yol'):
-    df = yol.text
-    df_disk = df[0:2] 
+for dftdf in veriyi_al.iter('downloadfile'):
+    dwnFile = dftdf.text
+    dwnDisk = dwnFile[0:2]
 
 help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "Giriş | login", "Giriş Kontrol | lc",
             "Giriş Bilgileri Değiştirme | gcra",
             "Dosya Yükleme | y",
             ".gitignore | gi",
+            "wd | Çalışma ve indirme alanının konumunu gösterir.",
+            "wd return | Konsol üzerinde günceller.",
+            "wd update | Çalışma ve İndirme Alanını Günceller",
+            "settings.xml | Ayarlar dosyasının içerisini değiştirirsiniz."
+            "\n\t",
             "git init | init",
             "git commit -m [mesaj]",
             "git log | l",
@@ -37,6 +42,7 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "git checkout (branchName) | ch",
             "git checkout -b (branchName) | br -ch",
             "git checkout -D (branchName) | ch -d",
+            "\n\t",
             "git stash | stash",
             "git stash list | stash -l",
             "git stash clear | stash -c",
@@ -56,27 +62,101 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "git tag -m (mesaj) | tagm",
             "git archive --output (DosyaAdı).zip (branchName) | save "
             ]
-
-
 helpTwo_list = ["Dosya Oluşturma| do, mk", 
             "dir | d",
             "copy | cp (oldFile) (newFile)",
             "cls | clear"]
-
-
 def yardim():
     print("\t --YARDIM 1--")
     for i in help_list:
         print("\t", i)
     return " "
-
-
 def yardim2():
     print("\t --YARDIM 2--")
     for i in helpTwo_list:
         print("\t", i)
     return " "
 
+def wpdW_control():
+    global wp
+    global dwnFile
+    print(f"workplace: {wp}")
+    print(f"download file: {dwnFile}")
+    return "\t ***"
+def wdReturn():
+    global wp
+    global dwnFile
+    pullWi = ET.parse('settings.xml')
+    getDate = pullWi.getroot()
+    for retwp in getDate.iter('workplace'):
+        wpNew = retwp.text
+        disk = wp[0:2]
+    for retdf in getDate.iter('downloadfile'):
+        dwnFileNew = retdf.text
+        dwnDisk = dwnFileNew[0:2]
+    wp = wpNew
+    dwnFile = dwnFileNew
+    print(f"Güncellendi:\n\tWorkplace: {wp}\n\tDownloadplace: {dwnFile}")
+    return "\t ***"
+def wdUpdateRom():
+    global wp
+    global dwnFile
+    choosess = int(input('1- Çalışma alanını güncelleme\n2- İndirme Alanaını Güncelleme\n3-Çalışma ve İndirme Alanı Ayarlama, -Çıkış\nPath: '))
+    if choosess == 1:
+        wpUp = input('Çalışma Alanı Yolu: ')
+        disk = wpUp[0:2]
+        wp = wpUp
+        print("Workplace: "+ wp)
+    elif choosess== 2:
+        dfUp = input('İndirme Alanı Yolu: ')
+        dwnDisk = wpUp[0:2]
+        dwnFile = wpUp
+        print("DownloadFile: "+ dwnFile)
+    elif choosess==3:
+        wpUp = input('Çalışma Alanı Yolu: ')
+        dfUp = input('İndirme Alanı Yolu: ')
+        disk = wpUp[0:2]
+        wp = wpUp
+        dwnDisk = wpUp[0:2]
+        dwnFile = wpUp
+        print("Workplace: "+ wp)
+        print("DownloadFile: "+ dwnFile)
+    elif choosess==0:
+        pass
+    else:
+        print('Seçim yapmadınız.')
+    return "\t ***"
+def settings():
+    chooseSet = int(input('1-Çalışma ve İndirme Yolu, 2- Çalışma Yolu 3-İndirme Yolu, 0-Çıkış\nChoose: '))
+    if chooseSet == 1:
+        xwP = input('Çalışma Yolu: ')
+        xDf = input('İndirme Yolu: ')
+        with open('settings.xml','w') as sett:
+            sett.write(f"<?xml version='1.0' encoding='UTF-8'?>\n<ayarlar>\n<on-off>on</on-off>\n<workplace>{xwP}</workplace>\n<downloadfile>{xDf}</downloadfile>\n</ayarlar>")
+            sett.close()
+            print("Dosya başarıyla yazdırıldı.")
+            wdReturn()
+    elif chooseSet==2:
+        global dwnFile
+        xwP = input('Çalışma Yolu: ')
+        with open('settings.xml','w') as sett:
+            sett.write(f"<?xml version='1.0' encoding='UTF-8'?>\n<ayarlar>\n<on-off>on</on-off>\n<workplace>{xwP}</workplace>\n<downloadfile>{dwnFile}</downloadfile>\n</ayarlar>")
+            sett.close()
+            print("Dosya başarıyla yazdırıldı.")
+            wdReturn()
+    elif chooseSet==3:
+        global wp
+        xDf = input('İndirme Yolu Yolu: ')
+        with open('settings.xml','w') as sett:
+            sett.write(f"<?xml version='1.0' encoding='UTF-8'?>\n<ayarlar>\n<on-off>on</on-off>\n<workplace>{wp}</workplace>\n<downloadfile>{xDf}</downloadfile>\n</ayarlar>")
+            sett.close()
+            print("Dosya başarıyla yazdırıldı.")
+            wdReturn()
+    elif chooseSet==0:
+        pass
+    else:
+        print('Bir şey seçmediniz.')
+    return "\t ***"
 def dosyaolustur():
     global disk 
     global wp
@@ -93,16 +173,12 @@ def clear():
     cls = lambda: os.system("cls")
     cls()
     return "\t ***"
-
 def copy():
-    
     eskiad = input("Dosya Adı: ")
     yeniad = input("Dosyanın Yeni Adı ")
-    
     copy_ = lambda: os.system(f"{disk} & cd {wp} & copy {eskiad} {yeniad}")
     copy_()
     return "\t ***"
-
 def gcra():
     print("Lütfen değiştireceğiz, username ve emailinizi giriniz.")
     username = input("username: ")
@@ -191,7 +267,7 @@ def indir():
     if endsing == True:
         print("Lütfen linkin sonundaki / siliniz.")
     else:
-        _indir_ = lambda: os.system(f"{disk} & cd {wp} & git clone {link}.git")
+        _indir_ = lambda: os.system(f"{dwnDisk} & cd {dwnFile} & git clone {link}.git")
         _indir_()
     return "\t ***"
 def y():
@@ -253,7 +329,6 @@ def git_diff():
     diff = lambda: os.system(f"{disk} & cd {wp} & git diff")
     diff()
     return "\t ***"
-
 def git_reflog():
     global disk 
     global wp
@@ -323,7 +398,6 @@ def gitignore():
         ex()
         
         w = f"{wp}/"
-      
         with open(w+'.gitignore','w') as ignore:
             ignore.write("easy-git.exe\nsettings.xml \n" + y)
         ignore.close()
@@ -480,14 +554,13 @@ def git_rebase():
     rb = lambda: os.system(f"{disk} & cd {wp} & git rebase {branch}")
     rb()
     return "\t ***"
-def test(): 
-    pass
-    return " "
-     
+def producer():
+    print('Yapımcı: Burak\nGithub: 31000s\nİnstagram: 3.10.00s')
+    return "\n ***"
+    
 def default():
     return "Yanlış"
 komutlar = {
-    "test":test,
     "yardım": yardim,
     "yardım2": yardim2,
     "help": yardim,
@@ -548,6 +621,10 @@ komutlar = {
     "tagln":git_tag_ln,
     "tagm":git_tag_message,
     "save": git_archive_output,
+    "wd": wpdW_control,
+    "wd return": wdReturn,
+    "wd update": wdUpdateRom,
+    "settings.xml": settings,
     
     "dir": workplace_dir,
     "d": workplace_dir,
@@ -559,12 +636,16 @@ komutlar = {
     "sil": clear,
     "cd": cd,
     "copy": copy,
-    "cp": copy
+    "cp": copy,
+    
+    "producer": producer,
+    "author": producer,
+    "by maker": producer
     }
 def switch(case):
     return komutlar.get(case, default)()
 while True:
-    title = lambda: os.system("title Git Easy To Use by Burak Yabgu V2")
+    title = lambda: os.system("title Simplified GitV3")
     title()
     komut = input("~#")
     print(switch(komut))
