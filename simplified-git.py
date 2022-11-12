@@ -27,6 +27,7 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "git add all * | add all",
             "git add -file-| add -file-",
             "git clone | i, indir",
+            "git pull | gl",
             "gitk | k",
             "git show | sh",
             "git diff | diff",
@@ -157,6 +158,12 @@ def settings():
     else:
         print('Bir şey seçmediniz.')
     return "\t ***"
+def git_pull():
+    global disk
+    global wp
+    pull = lambda: os.system(f'{disk} & cd {wp} & git pull')
+    pull()
+    return "\t ***"
 def dosyaolustur():
     global disk 
     global wp
@@ -188,7 +195,6 @@ def gcra():
     login_username()
     login_email()
     return "\t ***"
-
 def cd():
     cd = lambda: os.system("cd")
     cd()
@@ -625,6 +631,7 @@ komutlar = {
     "wd return": wdReturn,
     "wd update": wdUpdateRom,
     "settings.xml": settings,
+    "gl": git_pull,
     
     "dir": workplace_dir,
     "d": workplace_dir,
