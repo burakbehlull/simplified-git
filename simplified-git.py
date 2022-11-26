@@ -9,8 +9,12 @@ for workplace in veriyi_al.iter('workplace'):
 for dftdf in veriyi_al.iter('downloadfile'):
     dwnFile = dftdf.text
     dwnDisk = dwnFile[0:2]
-
-help_list = ["Diğer Komutlar | yardım2", "\n\t"
+help_list = ["Diğer Komutlar |",
+            "yardım -2", 
+            "yardım -3", 
+            "yardım -4", 
+            "yardım -sc"
+            "\n\t",
             "Giriş | login", "Giriş Kontrol | lc",
             "Giriş Bilgileri Değiştirme | gcra",
             "Dosya Yükleme | y",
@@ -31,7 +35,13 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "gitk | k",
             "git show | sh",
             "git diff | diff",
-            "git rm | rm",
+            "\n\t",
+            "git tag (sürüm adı) | tag",
+            "git tag -l -n | tagln",
+            "git tag -m (mesaj) | tagm",
+            "git archive --output (DosyaAdı).zip (branchName) | save "
+            ]
+helpTwo_list = ["git rm | rm",
             "git rm --cached | rmc",
             "git commit --amend -m | cam",
             "git log -n -number- | logn",
@@ -42,9 +52,8 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "git branch (branchName) | br -c",
             "git checkout (branchName) | ch",
             "git checkout -b (branchName) | br -ch",
-            "git checkout -D (branchName) | ch -d",
-            "\n\t",
-            "git stash | stash",
+            "git checkout -D (branchName) | ch -d"]
+helpThree_list = ["git stash | stash",
             "git stash list | stash -l",
             "git stash clear | stash -c",
             "git stash pop | stash -p",
@@ -56,14 +65,14 @@ help_list = ["Diğer Komutlar | yardım2", "\n\t"
             "git reflog | rf",
             "git mv (eski ad) (yeni ad) | mv",
             "git log --follow (Dosya Adı) | lf",
-            "git blame (Dosya Adı) | bl",
-            "\n\t",
-            "git tag (sürüm adı) | tag",
-            "git tag -l -n | tagln",
-            "git tag -m (mesaj) | tagm",
-            "git archive --output (DosyaAdı).zip (branchName) | save "
+            "git blame (Dosya Adı) | bl"]
+helpFour_list = ["git push | gitp ",
+            "git push origin master | gitp -o -m",
+            "git push [args] | gitp -a",
+            "git remote | gitr",
+            "git remote -v | gitr -v"
             ]
-helpTwo_list = ["Dosya Oluşturma| do, mk", 
+helpSystemCodes = ["Dosya Oluşturma| do, mk", 
             "dir | d",
             "copy | cp (oldFile) (newFile)",
             "cls | clear"]
@@ -77,6 +86,29 @@ def yardim2():
     for i in helpTwo_list:
         print("\t", i)
     return " "
+def yardim3():
+    print("\t --YARDIM 3--")
+    for i in helpTwo_list:
+        print("\t", i)
+    return " "
+def yardim4():
+    print("\t --YARDIM 4--")
+    for i in helpFour_list:
+        print("\t", i)
+    return " "
+def yardımSistemKodlari():
+    print("\t --YARDIM 5--")
+    for i in helpSystemCodes:
+        print("\t", i)
+    return " "
+
+def git_pull():
+    global disk
+    global wp
+    pull = lambda: os.system(f'{disk} & cd {wp} & git pull')
+    pull()
+    return "\t ***"
+
 
 def wpdW_control():
     global wp
@@ -158,12 +190,6 @@ def settings():
     else:
         print('Bir şey seçmediniz.')
     return "\t ***"
-def git_pull():
-    global disk
-    global wp
-    pull = lambda: os.system(f'{disk} & cd {wp} & git pull')
-    pull()
-    return "\t ***"
 def dosyaolustur():
     global disk 
     global wp
@@ -195,6 +221,7 @@ def gcra():
     login_username()
     login_email()
     return "\t ***"
+
 def cd():
     cd = lambda: os.system("cd")
     cd()
@@ -322,6 +349,12 @@ def gitk():
     global wp
     k = lambda: os.system(f"{disk} & cd {wp} & gitk")
     k()
+    return "\t ***"
+def git_push():
+    global disk 
+    global wp
+    gitpush = lambda: os.system(f"{disk} & cd {wp} & git push")
+    gitpush()
     return "\t ***"
 def git_show():
     global disk 
@@ -560,17 +593,63 @@ def git_rebase():
     rb = lambda: os.system(f"{disk} & cd {wp} & git rebase {branch}")
     rb()
     return "\t ***"
+def gitPush_oM():
+    o_M = lambda: os.system(f'{disk} & cd {wp} & git push origin master')
+    o_M()
+    return "\t ***"
+def gitPush_Args():
+    args = input('Genellikle origin master olarak kullanılır\nPath: ')
+    sendArgs = lambda: os.system(f"{disk} & cd {wp} & git push {args}")
+    sendArgs()
+    return "\t ***"
+def gitRemote():
+    remote = lambda: os.system(f"{disk} & cd {wp} & git remote")
+    remote()
+    return "\t ***"
+def gitRemoteV():
+    remoteV = lambda: os.system(f"{disk} & cd {wp} & git remote -v")
+    remoteV()
+    return "\t ***"
+def gitpull_Args():
+    args = input('Genellikle origin master olarak kullanılır\nPath: ')
+    Args = lambda: os.system(f"{disk} & cd {wp} & git ull {args}")
+    Args()
+    return "\t ***"
 def producer():
     print('Yapımcı: Burak\nGithub: 31000s\nİnstagram: 3.10.00s')
-    return "\n ***"
-    
+    return "\n ***"  
 def default():
-    return "Yanlış"
+    try:
+        cmd = lambda: os.system(f'{disk} & cd {wp} & {komut}')
+        cmd()
+    except Exception as err:
+        print(err)
+    else:
+        pass
+    return "\t ***"
 komutlar = {
     "yardım": yardim,
-    "yardım2": yardim2,
     "help": yardim,
-    "help2": yardim2,
+    
+    "yardım -2": yardim2,
+    "yardım-2": yardim2,
+    "help -2": yardim2,
+    "help-2": yardim2,
+    
+    "yardım -3": yardim3,
+    "yardım-3": yardim3,
+    "help -3": yardim3,
+    "help-3": yardim3,
+    
+    "yardım -4": yardim4,
+    "yardım-4": yardim4,
+    "help -4": yardim4,
+    "help-4": yardim4,
+    "yardım -sc": yardımSistemKodlari,
+    "yardım-sc": yardımSistemKodlari,
+    "help -sc": yardımSistemKodlari,
+    "help-sc": yardımSistemKodlari,
+    #/help
     "login control": git_login_control,
     "lc": git_login_control,
     "gcra": gcra,
@@ -632,9 +711,16 @@ komutlar = {
     "wd update": wdUpdateRom,
     "settings.xml": settings,
     "gl": git_pull,
-    
+    "gl -a": gitpull_Args,
+    "gitp": git_push,
+    "gitp -o -m": gitPush_oM,
+    "gitp -a": gitPush_Args,
+    "gitr": gitRemote,
+    "gitr -v": gitRemoteV,
+    #SC
     "dir": workplace_dir,
     "d": workplace_dir,
+    "ls": workplace_dir,
     "dosya oluştur": dosyaolustur,
     "mk": dosyaolustur,
     "do": dosyaolustur,
@@ -644,7 +730,7 @@ komutlar = {
     "cd": cd,
     "copy": copy,
     "cp": copy,
-    
+    #AUTH
     "producer": producer,
     "author": producer,
     "by maker": producer
@@ -652,7 +738,7 @@ komutlar = {
 def switch(case):
     return komutlar.get(case, default)()
 while True:
-    title = lambda: os.system("title Simplified GitV3")
+    title = lambda: os.system("title Git Easy To Use by Burak Y. V3.1")
     title()
     komut = input("~#")
     print(switch(komut))
