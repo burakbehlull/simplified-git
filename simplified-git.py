@@ -23,6 +23,7 @@ help_list = ["Diğer Komutlar |",
             "wd return | Konsol üzerinde günceller.",
             "wd update | Çalışma ve İndirme Alanını Günceller",
             "settings.xml | Ayarlar dosyasının içerisini değiştirirsiniz."
+            "gitignore generetor | gg.exe",
             "\n\t",
             "git init | init",
             "git commit -m [mesaj]",
@@ -618,6 +619,10 @@ def gitpull_Args():
 def producer():
     print('Yapımcı: Burak\nGithub: 31000s\nİnstagram: 3.10.00s')
     return "\n ***"  
+def exeGG():
+    myexe = lambda: os.system('start gg.exe')
+    myexe()
+    return ""
 def default():
     try:
         cmd = lambda: os.system(f'{disk} & cd {wp} & {komut}')
@@ -628,6 +633,7 @@ def default():
         pass
     return "\t ***"
 komutlar = {
+    "gg.exe": exeGG,
     "yardım": yardim,
     "help": yardim,
     
